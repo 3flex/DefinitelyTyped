@@ -81,13 +81,18 @@ declare namespace Resemble {
     /**
      * Run the analysis and get the comparison result
      */
-    onComplete(callback: (result: ResembleComparisonResult) => void): void;
+    onComplete(callback: (result: ResembleComparisonResult) => void): ResembleComparison;
 
+    setReturnEarlyThreshold(threshold: number): ResembleComparison;
+    scaleToSameSize(): ResembleComparison;
+    useOriginalSize(): ResembleComparison;
     ignoreNothing(): ResembleComparison;
+    ignoreLess(): ResembleComparison;
     ignoreAntialiasing(): ResembleComparison;
     ignoreColors(): ResembleComparison;
+    ignoreAlpha(): ResembleComparison;
     repaint(): ResembleComparison;
-    setReturnEarlyThreshold(threshold: number): ResembleComparison
+    outputSettings(outputSettings: Resemble.OutputSettings): ResembleComparison;
 
   }
 
