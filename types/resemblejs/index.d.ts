@@ -17,15 +17,45 @@ declare namespace Resemble {
    */
   function outputSettings(settings: OutputSettings): typeof Resemble;
 
+  function compare(image1: string | ImageData | Buffer, image2: string | ImageData | Buffer, options: Resemble.Options, callback: (data: any, result: ResembleComparisonResult) => void): void
+  function compare(image1: string | ImageData | Buffer, image2: string | ImageData | Buffer, callback: (data: any, result: ResembleComparisonResult) => void): void
+
   interface OutputSettings {
-    errorColor: {
+    errorColor?: {
       red: number;
       green: number;
       blue: number;
     };
-    errorType: string;
-    transparency: number;
-    largeImageThreshold: number;
+    errorType?: string;
+    transparency?: number;
+    largeImageThreshold?: number;
+    useCrossOrigin?: boolean;
+    outputDiff?: boolean;
+    boundingBox?: Box;
+    boundingBoxes?: Box[];
+    ignoredBox?: Box;
+    ignoredBoxes?: Box[];
+    ignoreAreasColoredWith?: Color;
+  }
+
+  interface Options {
+    returnEarlyThreshold?: number;
+    scaleToSameSize?: boolean;
+    ignore?: string | string[]
+  }
+
+  interface Box {
+    left: number;
+    top: number;
+    right: number;
+    bottom: number;
+  }
+
+  interface Color {
+    r: number;
+    g: number;
+    b: number;
+    a: number;
   }
 
   interface ResembleAnalysis {
@@ -57,6 +87,7 @@ declare namespace Resemble {
     ignoreAntialiasing(): ResembleComparison;
     ignoreColors(): ResembleComparison;
     repaint(): ResembleComparison;
+    setReturnEarlyThreshold(threshold: number): ResembleComparison
 
   }
 
@@ -78,6 +109,11 @@ declare namespace Resemble {
      * Get a data URL for the comparison image
      */
     getImageDataUrl(): string;
+
+    /**
+     * Get a node Buffer for the comparison
+     */
+    getBuffer(): Buffer;
 
     /**
      * The percentage of pixels which do not match between the images
